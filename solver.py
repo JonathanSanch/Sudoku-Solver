@@ -15,11 +15,29 @@ board = [
 #recursively backtrack through the board
 def solve(bo):
     
+    
+    #Base case for a solved board is a non-empty board
     find = find_empty(bo)
     if not find:
         return True
     else: 
+        #This is the position that is attempted to solve
         row, col = find
+    
+    
+    for i in range(1, 10):
+
+        if valid(bo, i, (row, col)):
+            #If the number works in position, enter it
+            bo[row][col] = i
+
+            if solve(bo):
+                return True
+            
+            #If board cannot be solved, then backtrack and try different nubmer
+            bo[row][col] = 0
+    
+    return False
 
 #Function checks if the given board, number, and starting position are valid
 def valid(bo, num, pos):
@@ -79,4 +97,7 @@ def find_empty(bo):
             
     return None
 
+print_board(board)
+solve(board)
+print("=======================")
 print_board(board)
